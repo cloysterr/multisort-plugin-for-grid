@@ -1,7 +1,10 @@
 /**
  * Plugin class used to enable multisort in grid,remove it from sorting and including it back in sorting if user wants
  */
-Ext.define('Ext.ux.plugin.MultiSortPlugin', {
+/**
+ * Plugin class used to enable multisort in grid,remove it from sorting and including it back in sorting if user wants
+ */
+Ext.define('Dorae.ux.plugin.MultiSortPlugin', {
     extend: 'Ext.AbstractPlugin',
     alias: 'plugin.multisort',
     mixins: {
@@ -98,7 +101,7 @@ Ext.define('Ext.ux.plugin.MultiSortPlugin', {
 });
 
 var columnNumberMaintainer = function (gridToSort) {
-    var sortArr = gridToSort.getStore().getSorters().items;//items in sort Array
+    var sortArr = gridToSort.getStore().getSorters().items.reverse();//items in sort Array
     var columnsArr = gridToSort.getColumns();
     var brackposition,textToset;
     for (var j = 0; j < columnsArr.length; j++) {
@@ -120,14 +123,16 @@ var columnNumberMaintainer = function (gridToSort) {
             else {
                 brackposition = columnsArr[j].text.charAt(columnsArr[j].text.lastIndexOf(')') - 1);
                 var removedNumber = parseInt(brackposition);
-                if (removedNumber === 3 && brackposition !== -1 && brackposition !== null && brackposition !== 'undefined' && !Object.is(brackposition, NaN)) {
+                if (brackposition !== -1 && brackposition !== null && brackposition !== undefined && !Object.is(removedNumber, NaN)) {
                     textToset = columnsArr[j].text.substring(0, columnsArr[j].text.lastIndexOf(')') - 2);
                     columnsArr[j].setText(textToset);//removing older sort number greater than 3rd
                 }
             }
         }
     }
+    sortArr.reverse();
 };
+
 /*
 mention this 
 plugins: [{
